@@ -7,7 +7,6 @@ use colored::Colorize;
 use crossterm::terminal::SetTitle;
 use crossterm::{execute};
 use futures_util::StreamExt;
-use shaco::error::LcuWebsocketError;
 use shaco::model::ws::LcuSubscriptionType::JsonApiEvent;
 use shaco::rest::RESTClient;
 use shaco::ws::LcuWebsocketClient;
