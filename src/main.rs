@@ -12,7 +12,8 @@ use crate::lobby::Lobby;
 
 #[tokio::main]
 async fn main() {
-    println!("Reveal v0.1.0\nThis will never be charged for, if you paid anything you were scammed.\nThe source code is available at:\nhttps://github.com/steele123/reveal\n");
+    let version = env!("CARGO_PKG_VERSION");
+    println!("Reveal v{}\nThis will never be charged for, if you paid anything you were scammed.\nThe source code is available at:\nhttps://github.com/steele123/reveal\n", version);
     println!("Trying to connect to league client...");
 
     loop {
