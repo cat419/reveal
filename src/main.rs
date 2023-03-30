@@ -26,10 +26,18 @@ async fn main() {
     println!("{} v{}\n{}\nThe source code is available at: https://github.com/steele123/reveal\n", ASCII_ART.cyan(), version, "This will never be charged for, if you paid anything you were scammed.".red());
     println!("{}", "Trying to connect to league client...".yellow());
 
+    let mut connected = false;
     loop {
         let client = match RESTClient::new() {
-            Ok(client) => client,
+            Ok(client) => {
+                connected = true;
+                client
+            },
             Err(_) => {
+                if connected {
+                    println!("{}", "Lost connection to league client, trying to reconnect...".bright_red());
+                    connected = false;
+                }
                 sleep(Duration::from_secs(1)).await;
                 continue;
             }
