@@ -2,6 +2,7 @@ mod lobby;
 mod utils;
 
 use std::time::Duration;
+use colored::Colorize;
 use futures_util::StreamExt;
 use shaco::error::LcuWebsocketError;
 use shaco::model::ws::LcuSubscriptionType::JsonApiEvent;
@@ -13,8 +14,8 @@ use crate::lobby::Lobby;
 #[tokio::main]
 async fn main() {
     let version = env!("CARGO_PKG_VERSION");
-    println!("Reveal v{}\nThis will never be charged for, if you paid anything you were scammed.\nThe source code is available at:\nhttps://github.com/steele123/reveal\n", version);
-    println!("Trying to connect to league client...");
+    println!("{} v{}\n{}\nThe source code is available at:\nhttps://github.com/steele123/reveal\n", "reveal".cyan(), version, "This will never be charged for, if you paid anything you were scammed.".red());
+    println!("{}", "Trying to connect to league client...".yellow());
 
     loop {
         let client = match RESTClient::new() {
@@ -39,11 +40,11 @@ async fn main() {
             .await
             .unwrap();
 
-        println!("Connected to League Client!");
+        println!("{}", "Connected to League Client!".green());
         while let Some(msg) = ws.next().await {
             let client_state = msg.data.to_string().replace('\"', "");
             if client_state == "ChampSelect" {
-                println!("Champ select started, grabbing team mates...");
+                println!("{}", "Champ select started, grabbing team mates...".bright_cyan());
                 sleep(Duration::from_secs(3)).await;
                 let team: Lobby = serde_json::from_value(client.get("/chat/v5/participants/champ-select".to_string()).await.unwrap()).unwrap();
                 let link = utils::create_opgg_link(team.participants);
@@ -51,7 +52,7 @@ async fn main() {
                 continue;
             }
 
-            println!("Client State Update: {}", client_state);
+            println!("Client State Update: {}", client_state.bright_blue());
         }
     }
 }
