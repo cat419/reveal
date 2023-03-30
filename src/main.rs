@@ -11,6 +11,8 @@ use shaco::ws::LcuWebsocketClient;
 use tokio::time::sleep;
 use crate::lobby::Lobby;
 
+const SEPERATOR: &str = "============================";
+
 #[tokio::main]
 async fn main() {
     let version = env!("CARGO_PKG_VERSION");
@@ -54,12 +56,26 @@ async fn main() {
                 println!("{}", "Champ select started, grabbing team mates...".bright_cyan());
                 sleep(Duration::from_secs(3)).await;
                 let team: Lobby = serde_json::from_value(client.get("/chat/v5/participants/champ-select".to_string()).await.unwrap()).unwrap();
+                if team.participants.is_empty() {
+                    println!("{}", "We couldn't find any team mates, try again later.".bright_red());
+                    continue;
+                }
+
+                let mut team_string = String::new();
+                for summoner in team.participants.iter() {
+                    team_string.push_str(&summoner.name);
+                    if summoner.name != team.participants.last().unwrap().name {
+                        team_string.push_str(", ");
+                    }
+                }
+
+                println!("{}\nTeam: {}", SEPERATOR.magenta(), team_string.bright_purple());
                 let link = utils::create_opgg_link(team.participants);
-                println!("CTRL + CLICK LINK TO OPEN\n{}", link);
+                println!("{}\n{}\n{}", "CTRL + CLICK LINK TO OPEN".bright_green(), link.bright_blue(), SEPERATOR.magenta());
                 continue;
             }
 
-            println!("Client State Update: {}", client_state.bright_blue());
+            println!("Client State Update: {}", client_state.bright_yellow());
         }
     }
 }
