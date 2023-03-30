@@ -11,7 +11,10 @@ Head over to the [releases](https://github.com/steele123/reveal/releases) and do
 - Less memory usage
 - Not dependent on the .NET runtime (You don't need it installed)
 - Faster startup time and faster execution time
-- We don't spam the LCU API with requests, we only request the data as it's needed by connecting to the LCU's event websocket. (This could make our tool a bit safer to use)
+- We don't spam the LCU API with requests, we only request the data as it's needed by connecting to the LCU's event websocket (This could make our tool a bit safer to use)
+
+### Safety
+Most likely this tool is pretty safe, and you shouldn't get banned for using it, but I can't guarantee it. If you would like to increase the safety compiling it yourself won't hurt. If you get banned for using this tool, I'm not responsible.
 
 ## Credits
 - [Shaco](https://github.com/Leastrio/Shaco/tree/main) for the LCU API wrapper so I didn't need to go through the pain.
