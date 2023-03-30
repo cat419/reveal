@@ -1,8 +1,11 @@
 mod lobby;
 mod utils;
 
+use std::io::stdout;
 use std::time::Duration;
 use colored::Colorize;
+use crossterm::terminal::SetTitle;
+use crossterm::{execute};
 use futures_util::StreamExt;
 use shaco::error::LcuWebsocketError;
 use shaco::model::ws::LcuSubscriptionType::JsonApiEvent;
@@ -25,6 +28,7 @@ async fn main() {
     let version = env!("CARGO_PKG_VERSION");
     println!("{} v{}\n{}\nThe source code is available at: https://github.com/steele123/reveal\n", ASCII_ART.cyan(), version, "This will never be charged for, if you paid anything you were scammed.".red());
     println!("{}", "Trying to connect to league client...".yellow());
+    execute!(stdout(), SetTitle("notepad")).unwrap();
 
     let mut connected = false;
     loop {
@@ -86,7 +90,13 @@ async fn main() {
 
                 println!("{}\nTeam: {}", SEPERATOR.magenta(), team_string.bright_purple());
                 let link = utils::create_opgg_link(team.participants);
-                println!("{}\n{}\n{}", "CTRL + CLICK LINK TO OPEN".bright_green(), link.bright_blue(), SEPERATOR.magenta());
+                match open::that(&link) {
+                    Ok(_) => {}
+                    Err(_) => {
+                        println!("{}", "Failed to open link, try CTRL + CLICKING the link below.".bright_red());
+                    }
+                }
+                println!("{}\n{}", link.bright_blue(), SEPERATOR.magenta());
                 continue;
             }
 

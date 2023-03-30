@@ -7,7 +7,7 @@ Head over to the [releases](https://github.com/steele123/reveal/releases) and do
 
 ### Why this instead of LobbyReveal?
 [LobbyReveal](https://github.com/Riotphobia/LobbyReveal) is great, but here's a few reasons.
-- Smaller binary size (1.3MB)
+- Smaller binary size (1.4MB)
 - Less memory usage
 - Not dependent on the .NET runtime (You don't need it installed)
 - Faster startup time and faster execution time
