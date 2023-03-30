@@ -16,6 +16,8 @@ Head over to the [releases](https://github.com/steele123/reveal/releases) and do
 ### Safety
 Most likely this tool is pretty safe, and you shouldn't get banned for using it, but I can't guarantee it. If you would like to increase the safety compiling it yourself won't hurt. If you get banned for using this tool, I'm not responsible.
 
+![Screenshot](/tool.png)
+
 ## Credits
 - [Shaco](https://github.com/Leastrio/Shaco/tree/main) for the LCU API wrapper so I didn't need to go through the pain.
 - [LobbyReveal](https://github.com/Riotphobia/LobbyReveal) the original tool, thanks to [Inception](https://github.com/0xInception) for making it.
