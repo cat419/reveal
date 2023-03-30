@@ -13,10 +13,17 @@ use crate::lobby::Lobby;
 
 const SEPERATOR: &str = "============================";
 
+const ASCII_ART: &str = r#"
+                           _
+  _ __ _____   _____  __ _| |
+ | '__/ _ \ \ / / _ \/ _` | |
+ | | |  __/\ V /  __/ (_| | |
+ |_|  \___| \_/ \___|\__,_|_|"#;
+
 #[tokio::main]
 async fn main() {
     let version = env!("CARGO_PKG_VERSION");
-    println!("{} v{}\n{}\nThe source code is available at:\nhttps://github.com/steele123/reveal\n", "reveal".cyan(), version, "This will never be charged for, if you paid anything you were scammed.".red());
+    println!("{} v{}\n{}\nThe source code is available at: https://github.com/steele123/reveal\n", ASCII_ART.cyan(), version, "This will never be charged for, if you paid anything you were scammed.".red());
     println!("{}", "Trying to connect to league client...".yellow());
 
     loop {
