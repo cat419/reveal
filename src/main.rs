@@ -46,7 +46,7 @@ async fn main() {
                 sleep(Duration::from_secs(3)).await;
                 let team: Lobby = serde_json::from_value(client.get("/chat/v5/participants/champ-select".to_string()).await.unwrap()).unwrap();
                 let link = utils::create_opgg_link(team.participants);
-                println!("{}", link);
+                println!("CTRL + CLICK LINK TO OPEN\n{}", link);
                 continue;
             }
 
