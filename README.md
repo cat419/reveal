@@ -3,7 +3,7 @@
 Reveal is a simple, lightweight, and fast tool for League of Legends to reveal your team mates names in champ select.
 
 ### Usage
-Head over to the [releases]() and download the precompiled binary, then simply just run it and it will automatically start revealing your team-mates names in champ select.
+Head over to the [releases](https://github.com/steele123/reveal/releases) and download the precompiled binary, then simply just run it and it will automatically start revealing your team-mates names in champ select.
 
 ### Why this instead of LobbyReveal?
 [LobbyReveal](https://github.com/Riotphobia/LobbyReveal) is great, but here's a few reasons.
