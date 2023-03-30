@@ -41,6 +41,13 @@ async fn main() {
             .unwrap();
 
         println!("{}", "Connected to League Client!".green());
+        let team: Lobby = serde_json::from_value(client.get("/chat/v5/participants/champ-select".to_string()).await.unwrap()).unwrap();
+        if !team.participants.is_empty() {
+            println!("{}", "We detected you are in a lobby here is your team!".bright_cyan());
+            let link = utils::create_opgg_link(team.participants);
+            println!("CTRL + CLICK LINK TO OPEN\n{}", link);
+        }
+
         while let Some(msg) = ws.next().await {
             let client_state = msg.data.to_string().replace('\"', "");
             if client_state == "ChampSelect" {
