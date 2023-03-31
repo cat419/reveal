@@ -12,6 +12,7 @@ use shaco::rest::RESTClient;
 use shaco::ws::LcuWebsocketClient;
 use tokio::time::sleep;
 use crate::lobby::Lobby;
+use crate::utils::display_champ_select;
 
 const SEPERATOR: &str = "============================";
 
@@ -27,7 +28,6 @@ async fn main() {
     let version = env!("CARGO_PKG_VERSION");
     println!("{} v{}\n{}\nThe source code is available at: https://github.com/steele123/reveal\n", ASCII_ART.cyan(), version, "This will never be charged for, if you paid anything you were scammed.".red());
     println!("{}", "Trying to connect to league client...".yellow());
-    execute!(stdout(), SetTitle("notepad")).unwrap();
 
     let mut connected = false;
     loop {
@@ -63,9 +63,7 @@ async fn main() {
         println!("{}", "Connected to League Client!".green());
         let team: Lobby = serde_json::from_value(client.get("/chat/v5/participants/champ-select".to_string()).await.unwrap()).unwrap();
         if !team.participants.is_empty() {
-            println!("{}", "We detected you are in a lobby here is your team!".bright_cyan());
-            let link = utils::create_opgg_link(team.participants);
-            println!("CTRL + CLICK LINK TO OPEN\n{}", link);
+            display_champ_select(team);
         }
 
         while let Some(msg) = ws.next().await {
@@ -74,28 +72,7 @@ async fn main() {
                 println!("{}", "Champ select started, grabbing team mates...".bright_cyan());
                 sleep(Duration::from_secs(3)).await;
                 let team: Lobby = serde_json::from_value(client.get("/chat/v5/participants/champ-select".to_string()).await.unwrap()).unwrap();
-                if team.participants.is_empty() {
-                    println!("{}", "We couldn't find any team mates, try again later.".bright_red());
-                    continue;
-                }
-
-                let mut team_string = String::new();
-                for summoner in team.participants.iter() {
-                    team_string.push_str(&summoner.name);
-                    if summoner.name != team.participants.last().unwrap().name {
-                        team_string.push_str(", ");
-                    }
-                }
-
-                println!("{}\nTeam: {}", SEPERATOR.magenta(), team_string.bright_purple());
-                let link = utils::create_opgg_link(team.participants);
-                match open::that(&link) {
-                    Ok(_) => {}
-                    Err(_) => {
-                        println!("{}", "Failed to open link, try CTRL + CLICKING the link below.".bright_red());
-                    }
-                }
-                println!("{}\n{}", link.bright_blue(), SEPERATOR.magenta());
+                display_champ_select(team);
                 continue;
             }
 
