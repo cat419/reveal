@@ -34,7 +34,7 @@ pub fn display_champ_select(lobby: Lobby) {
     match open::that(&link) {
         Ok(_) => {}
         Err(_) => {
-            println!("{}", "Failed to open link in browser, the link to your lobby is below.".bright_red());
+            println!("Failed to open link in browser, the link to your lobby is below.");
         }
     }
     println!("{}", link);

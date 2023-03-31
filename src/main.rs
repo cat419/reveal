@@ -1,11 +1,8 @@
 mod lobby;
 mod utils;
 
-use std::io::stdout;
 use std::time::Duration;
 use colored::Colorize;
-use crossterm::terminal::SetTitle;
-use crossterm::{execute};
 use futures_util::StreamExt;
 use shaco::model::ws::LcuSubscriptionType::JsonApiEvent;
 use shaco::rest::RESTClient;
@@ -13,8 +10,6 @@ use shaco::ws::LcuWebsocketClient;
 use tokio::time::sleep;
 use crate::lobby::Lobby;
 use crate::utils::display_champ_select;
-
-const SEPERATOR: &str = "============================";
 
 const ASCII_ART: &str = r#"
                            _
