@@ -1,7 +1,7 @@
 use crate::lobby::{Lobby, Participant};
 
 pub fn create_opgg_link(summoners: Vec<Participant>) -> String {
-    let mut region = summoners[0].region.to_lowercase();
+    let mut region = get_common_region(&summoners);
     // Remove any numbers from region
     region.retain(|c| !c.is_numeric());
 
@@ -13,6 +13,26 @@ pub fn create_opgg_link(summoners: Vec<Participant>) -> String {
     }
     opgg_link.pop();
     opgg_link
+}
+
+fn get_common_region(summoners: &Vec<Participant>) -> String {
+    // Go through each summoner and find the most common region
+    let mut regions = Vec::new();
+    for summoner in summoners {
+        regions.push(&summoner.region);
+    }
+
+    let mut most_common_region = String::new();
+    let mut highest_count = 0;
+    for region in regions.clone() {
+        let count = regions.iter().filter(|&r| r == &region).count();
+        if count > highest_count {
+            highest_count = count;
+            most_common_region = region.clone();
+        }
+    }
+
+    most_common_region
 }
 
 pub fn display_champ_select(lobby: Lobby) {
