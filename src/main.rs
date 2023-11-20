@@ -21,8 +21,8 @@ const ASCII_ART: &str = r#"
 #[tokio::main]
 async fn main() {
     let version = env!("CARGO_PKG_VERSION");
-    println!("{} v{}\nThe source code is available at: https://github.com/steele123/reveal\n", ASCII_ART.cyan(), version);
-    println!("Made with {} by {}", "❤️".red(), "Steele".bright_yellow());
+    println!("{} v{}\ncode: https://github.com/steele123/reveal", ASCII_ART.cyan(), version);
+    println!("Made with {} by {}\n", "❤️".red(), "Steele".bright_yellow());
     println!("{}", "Trying to connect to league client...".yellow());
 
     let mut connected = false;
