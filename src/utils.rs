@@ -47,7 +47,8 @@ pub fn display_champ_select(lobby: Lobby) {
 
     let mut team_string = String::new();
     for summoner in lobby.participants.iter() {
-        team_string.push_str(&summoner.name);
+        let participant = format!("{}#{} ({})", summoner.game_name, summoner.game_tag, summoner.name);
+        team_string.push_str(&participant);
         if summoner.name != lobby.participants.last().unwrap().name {
             team_string.push_str(", ");
         }
