@@ -21,7 +21,8 @@ const ASCII_ART: &str = r#"
 #[tokio::main]
 async fn main() {
     let version = env!("CARGO_PKG_VERSION");
-    println!("{} v{}\n{}\nThe source code is available at: https://github.com/steele123/reveal\n", ASCII_ART.cyan(), version, "This will never be charged for, if you paid anything you were scammed.".red());
+    println!("{} v{}\nThe source code is available at: https://github.com/steele123/reveal\n", ASCII_ART.cyan(), version);
+    println!("Made with {} by {}", "❤️".red(), "Steele".bright_yellow());
     println!("{}", "Trying to connect to league client...".yellow());
 
     let mut connected = false;
@@ -30,7 +31,7 @@ async fn main() {
             Ok(client) => {
                 connected = true;
                 client
-            },
+            }
             Err(_) => {
                 if connected {
                     println!("{}", "Lost connection to league client, trying to reconnect...".bright_red());
