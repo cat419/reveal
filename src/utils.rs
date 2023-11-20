@@ -1,3 +1,4 @@
+use urlencoding::encode;
 use crate::lobby::{Lobby, Participant};
 
 pub fn create_opgg_link(summoners: Vec<Participant>) -> String {
@@ -5,14 +6,17 @@ pub fn create_opgg_link(summoners: Vec<Participant>) -> String {
     // Remove any numbers from region
     region.retain(|c| !c.is_numeric());
 
-    let mut opgg_link = format!("https://www.op.gg/multisearch/{}?summoners=", region);
+    let base_url = format!("https://www.op.gg/multisearch/{}?summoners=", region);
+    let mut link_path = String::new();
     for summoner in summoners {
-        let name_without_spaces = summoner.name.replace(' ', "%20");
-        opgg_link.push_str(&name_without_spaces);
-        opgg_link.push(',');
+        let full_tag = format!("{}#{}", summoner.game_name, summoner.game_tag);
+        link_path.push_str(&full_tag);
+        link_path.push(',');
     }
-    opgg_link.pop();
-    opgg_link
+    link_path.pop();
+
+    let encoded_path = encode(&link_path);
+    format!("{}{}", base_url, encoded_path)
 }
 
 fn get_common_region(summoners: &Vec<Participant>) -> String {
